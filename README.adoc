@@ -1,0 +1,11 @@
+= Spring environment properties demo app
+
+== Running the app
+
+[source,bash]
+mvn spring-boot:run \
+        -Drun.jvmArguments="\
+        -Dfoo=foo \
+        -Dbar=bar \
+        -Dbaz=baz \
+        -agentlib:jdwp=transport=dt_socket,server=y,address=1044,suspend=n"
