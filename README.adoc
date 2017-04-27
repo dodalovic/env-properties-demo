@@ -2,6 +2,7 @@
 
 == Running the app
 
+The easiest way is to run the app using https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html[Spring boot maven plugin^]
 [source,bash]
 mvn spring-boot:run \
         -Drun.jvmArguments="\
@@ -9,3 +10,57 @@ mvn spring-boot:run \
         -Dbar=bar \
         -Dbaz=baz \
         -agentlib:jdwp=transport=dt_socket,server=y,address=1044,suspend=n"
+
+== Testing
+
+=== System properties
+
+[source,bash]
+curl -s 'http://localhost:8080/sys/props' | jq .
+
+Response:
+[source,javascript]
+{
+  "size": 63,
+  "values": {
+    "java.runtime.name": "Java(TM) SE Runtime Environment",
+    "sun.boot.library.path": "/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/jre/lib",
+    "java.vm.version": "25.121-b13"
+    // ...
+    }
+}
+
+=== System environment
+
+[source,bash]
+curl -s 'http://localhost:8080/sys/env' | jq .
+
+Response:
+[source,javascript]
+{
+"size": 46,
+"values": {
+    "M2": "/usr/local/Cellar/maven/3.5.0/libexec/bin",
+    "GREP_COLOR": "1;33",
+    "JENV_FORCEJDKHOME": "true"
+    // ...
+    }
+}
+
+=== Custom spring properties
+
+[source,bash]
+curl -s 'http://localhost:8080/sys/props/custom' | jq .
+
+Response:
+[source,javascript]
+{
+    "size": 5,
+    "values": {
+        "properties.key1": "properties.val1",
+        "properties.key2": "properties.val2",
+        "foo": "foo",
+        "bar": "bar",
+        "baz": "baz"
+    }
+}
