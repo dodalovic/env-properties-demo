@@ -46,7 +46,7 @@ public class EnvPropertiesController {
     }
 
     @GetMapping("/sys/env")
-    public Map<String, Object> get() {
+    public Map<String, Object> getSystemEnvironment() {
         val env = System.getenv();
         return ImmutableMap.of(
                 "size", env.size(),
